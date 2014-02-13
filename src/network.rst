@@ -15,6 +15,21 @@ your container:
     lxc.network.ipv4  = 10.0.3.42
 
 
+Firewall setup (UFW)
+--------------------
+
+By default, UFW drops all forwarding traffic. As a result you will need to
+enable UFW forwarding:
+
+::
+
+    sudo editor /etc/default/ufw
+    # Change:
+    # DEFAULT_FORWARD_POLICY="DROP"
+    # to
+    DEFAULT_FORWARD_POLICY="ACCEPT"
+
+
 Setting up a DNS server
 -----------------------
 
@@ -24,6 +39,7 @@ will ship with a custom config that will only make things harder. Save yourself
 some headaches and reinstall the bind9 package with the stock config.
 
 ::
+
     sudo apt-get remove --purge bind9
     sudo apt-get install bind9
 
@@ -33,7 +49,7 @@ the following:
 
 ::
 
-    sudo vim editor /etc/bind/named.conf.options
+    sudo editor /etc/bind/named.conf.options
 
     # These are the IPs for Google DNS servers, substitute them with the ones
     # provided by your ISP.
@@ -54,19 +70,11 @@ your logs in /var/log/syslog:
     * Starting domain name service... bind9
     ...done.
 
-
-
-
-Firewall setup (UFW)
---------------------
-
-By default, UFW drops all forwarding traffic. As a result you will need to
-enable UFW forwarding:
+Once your DNS server is set up, you probably don't want it to be visible to the 
+outside world. You can block incoming request with your firewall.
 
 ::
 
-    sudo editor /etc/default/ufw
-    # Change:
-    # DEFAULT_FORWARD_POLICY="DROP"
-    # to
-    DEFAULT_FORWARD_POLICY="ACCEPT"
+    sudo ufw deny from any to 94.23.12.211 port 53
+
+
