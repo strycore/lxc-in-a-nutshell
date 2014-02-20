@@ -70,7 +70,7 @@ your logs in /var/log/syslog:
     * Starting domain name service... bind9
     ...done.
 
-Once your DNS server is set up, you probably don't want it to be visible to the 
+Once your DNS server is set up, you probably don't want it to be visible to the
 outside world. You can block incoming request with your firewall.
 
 ::
@@ -78,3 +78,46 @@ outside world. You can block incoming request with your firewall.
     sudo ufw deny from any to 94.23.12.211 port 53
 
 
+SSH
+---
+
+For your deployment purposes and other tasks, you will probably need direct
+access to your lxc containers via ssh. You can achieve this by setting up a SSH
+tunnel on your host, making your container accessible from anywhere.
+You will need a different port for each of your containers you want to access.
+It is sadly not possible to route your SSH connection based on the hostname
+like a webserver does.
+
+Let's say your container's IP is 10.0.3.101 and you wish to access to your 
+container via the port 22101. On your host machine, run the following:
+
+::
+
+    ssh -L 0.0.0.0:22101:10.0.3.101:22 localhost
+    # Don't forget to open the port to the outside
+    sudo ufw allow 22101
+
+Then from the outside you can run:
+
+::
+
+    ssh myusername@domain.of.host -p 22101
+
+For further convinience, edit your .ssh/config file to set up default values for this
+connection. This assume that you give your containers unique domain names either 
+in your DNS configuration or in /etc/hosts.
+
+::
+
+    editor .ssh/config
+
+    # Add the following
+    Host mycontainer.domain
+        User myusername
+        Port 22101
+
+From now on you can log in you container with:
+
+::
+
+    ssh mycontainer.domain
