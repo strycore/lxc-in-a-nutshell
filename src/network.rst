@@ -15,8 +15,78 @@ your container:
     lxc.network.ipv4  = 10.0.3.42
 
 
-Firewall setup (UFW)
---------------------
+Firewall setup
+--------------
+
+With iptables
+
+Iptables is the default application provided on Linux systems to control the 
+firewall features provided by the kernel.
+
+You can keep your iptables rules in a file where each command will be run 
+sequentially. Keep in mind that the order of these commands matter and a bad 
+sequence could possibly lock yourself out of your own server.
+
+Configure the filter table:
+
+::
+    * filter
+
+    # Accept all loopback trafic
+    -A INPUT -i lo -j ACCEPT
+    # Accept the ICMP protocol (your server will respond to ping)
+    -A INPUT -p icmp -j ACCEPT
+
+    # Accept all inbound traffic from already established connections
+    -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+    # By default accept all packets to be forwarded
+    -A FORWARD -j ACCEPT
+    # By default accept all outgoing traffic
+    -A OUTPUT -j ACCEPT
+
+    # Allow incoming traffic from SSH
+    -A INPUT -p tcp --dport ssh -j ACCEPT
+
+    # Allow HTTP traffic
+    -A INPUT -p tcp --dport 80 -j ACCEPT
+    -A INPUT -p tcp --dport 443 -j ACCEPT
+
+    COMMIT
+
+Configure the nat table:
+
+::
+    *nat
+
+    # Allow routing from eth0 (the interface connected to the internet)
+    -A POSTROUTING -o eth0 -j MASQUERADE
+    
+    
+    # Forward SSH connections to your containers. 
+    -A PREROUTING -i eth0 -p tcp --dport 22101 -j DNAT --to-destination 10.0.3.101:22
+    -A PREROUTING -i eth0 -p tcp --dport 22102 -j DNAT --to-destination 10.0.3.102:22
+    -A PREROUTING -i eth0 -p tcp --dport 22103 -j DNAT --to-destination 10.0.3.103:22
+    -A PREROUTING -i eth0 -p tcp --dport 22104 -j DNAT --to-destination 10.0.3.104:22
+
+    COMMIT
+
+
+One common way to manage your iptables settings and have them running as a 
+service is binding them with your network interface in the 
+/etc/network/interfaces file.
+
+::
+    auto eth0
+    iface eth0 inet static
+        # Your network interface config here
+        pre-up iptables-restore < /etc/iptables.up.rules
+
+
+With UFW
+
+ufw (Uncomplicated Firewall) is a wrapper around iptables providing a user 
+friendly interface to manipulate your firewall.
 
 By default, UFW drops all forwarding traffic. As a result you will need to
 enable UFW forwarding:
@@ -88,7 +158,7 @@ You will need a different port for each of your containers you want to access.
 It is sadly not possible to route your SSH connection based on the hostname
 like a webserver does.
 
-Let's say your container's IP is 10.0.3.101 and you wish to access to your 
+Let's say your container's IP is 10.0.3.101 and you wish to access to your
 container via the port 22101. On your host machine, run the following:
 
 ::
@@ -104,7 +174,7 @@ Then from the outside you can run:
     ssh myusername@domain.of.host -p 22101
 
 For further convinience, edit your .ssh/config file to set up default values for this
-connection. This assume that you give your containers unique domain names either 
+connection. This assume that you give your containers unique domain names either
 in your DNS configuration or in /etc/hosts.
 
 ::
