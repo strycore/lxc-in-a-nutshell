@@ -179,7 +179,7 @@ in your DNS configuration or in /etc/hosts.
 
 ::
 
-    editor .ssh/config
+    editor ~/.ssh/config
 
     # Add the following
     Host mycontainer.domain

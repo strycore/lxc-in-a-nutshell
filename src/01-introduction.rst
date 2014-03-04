@@ -14,10 +14,23 @@ Installing LXC
 ::
     sudo apt-get install lxc
 
+If you're on an older version of Ubuntu than 14.04, you can get the latest 
+version by using the PPA providing the latest stable release:
+
+::
+
+    sudo add-apt-repository ppa:ubuntu-lxc/stable
+    sudo apt-get update
+    sudo apt-get install lxc
+
 Creating your first container
 -----------------------------
 
-Create the container
+In order to create a container, you have to give it a name (with the -n 
+parameter) and a template (with the -t parameter). If this is the first time 
+you use a template, it may take a few minutes to download system files and set 
+them all up, but as these will all be cached, any container based off the same 
+template will be created almost instantly.
 
 ::
     sudo lxc-create -t ubuntu -n mycontainer
@@ -25,7 +38,7 @@ Create the container
 Start the container
 
 ::
-    sudo lxc-start -n ubuntu
+    sudo lxc-start -n ubuntu -d
 
 Login in container
 
