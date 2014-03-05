@@ -1,7 +1,7 @@
 The host machine
 ================
 
-Setting up LXC containers will require you to have a dedicated server to run 
+Setting up LXC containers will require you to have a dedicated server to run
 your containers on. While this book targets Ubuntu Server 14.04 as the host
 system, any Linux distribution with a modern kernel should be able to host your
 containers.
@@ -9,18 +9,18 @@ containers.
 Basic setup
 -----------
 
-In these steps, we'll review the basic setup for your host server. This is not 
+In these steps, we'll review the basic setup for your host server. This is not
 related to LXC in any way but these are common steps usually taken after the OS
 has finished installing.
 
-First you'll probably need a few packages, install whatever tools you need to 
+First you'll probably need a few packages, install whatever tools you need to
 feel at home. For example:
 
 ::
     apt-get install git curl vim-nox zsh
 
-Then create a user, since your provider probably gave you root access and we 
-don't want to directly log in as root. Add this user to the sudo group in order 
+Then create a user, since your provider probably gave you root access and we
+don't want to directly log in as root. Add this user to the sudo group in order
 to have admin rights with the newly created user.
 
 ::
@@ -34,7 +34,7 @@ You can now terminate your root SSH session and log back in as this user.
     Connection to hostname.com closed.
     $ ssh username@hostname.com
 
-If you have SSH and GPG keys attached to your identity, now is a good time to 
+If you have SSH and GPG keys attached to your identity, now is a good time to
 import them in ~/.ssh and ~/.gnupg.
 
 ::
@@ -48,8 +48,8 @@ import them in ~/.ssh and ~/.gnupg.
     cd ~/.gnupg
     scp *.gpg username@hostname:~/.gnupg
 
-If you want to log in you server without needing a password, copy your SSH 
-public key in the ~/.ssh/authorized_keys file on your host. This command will 
+If you want to log in you server without needing a password, copy your SSH
+public key in the ~/.ssh/authorized_keys file on your host. This command will
 take care of the process just fine:
 
 ::
@@ -63,7 +63,7 @@ If you encounter error messages such as:
     perl: warning: Falling back to the standard locale ("C").
     locale: Cannot set LC_ALL to default locale: No such file or directory
 
-Check your locale settings in /etc/environment and /etc/default/locale, update 
+Check your locale settings in /etc/environment and /etc/default/locale, update
 the LANG setting if needed then update your locales:
 
 ::
@@ -98,26 +98,26 @@ and install missing language packs:
 CGroups
 -------
 
-Your kernel should have cgroup support enabled for LXC to work properly. This
-should already be the case if you are running a stock Ubuntu kernel but bear in
-mind that some dedicated servers ship with a custom kernel that don't support
-cgroups. If this is the case, the simplest way of getting a supported kernel is 
-installing the stock kernel:
+Your kernel should have cgroup support enabled for LXC to work properly.
+This should already be the case if you are running a stock Ubuntu kernel
+but bear in mind that some dedicated servers ship with a custom kernel
+that don't support cgroups. If this is the case, the simplest way of
+getting a supported kernel is installing the stock kernel:
 
 ::
     apt-get install linux-image-server
 
-If your dedicated server came with an custom kernel, then there probably is a 
-grub config file to tell the boatloader to load this kernel. In the following 
-example, we see that the French provider OVH ships with a custom kernel 
-incompatible with LXC, you should move the corresponding grub config file out 
-of the way: 
+If your dedicated server came with an custom kernel, then there probably
+is a grub config file to tell the boatloader to load this kernel. In the
+following example, we see that the French provider OVH ships with a custom
+kernel incompatible with LXC, you should move the corresponding grub
+config file out of the way:
 
 ::
     mv /etc/grub.d/06_OVHkernel ~
 
-Once you are done with that, you'll have to regenerate your grub config then 
-reboot:
+Once you are done with that, you'll have to regenerate your grub config
+then reboot:
 
 ::
     update-grub
@@ -129,8 +129,8 @@ If everything when as expected, you should now run the stock kernel:
     # uname -a
     Linux lxchost 3.11.0-17-generic #31-Ubuntu SMP Mon Feb 3 21:52:43 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux
 
-Check that cgroup is correctly mounted, you should see something similar to the 
-following:
+Check that cgroup is correctly mounted, you should see something similar
+to the following:
 
 ::
     # mount | grep cgroup
@@ -149,9 +149,6 @@ following:
 HTTP Server
 -----------
 
-Your host machine can act as a HTTP proxy for your containers. While any HTTP 
-should get the job done, we'll be using nginx which is a good candidate for this
-task.
-
-
-
+Your host machine can act as a HTTP proxy for your containers. While any
+HTTP should get the job done, we'll be using nginx which is a good
+candidate for this task.

@@ -14,7 +14,7 @@ Installing LXC
 ::
     sudo apt-get install lxc
 
-If you're on an older version of Ubuntu than 14.04, you can get the latest 
+If you're on an older version of Ubuntu than 14.04, you can get the latest
 version by using the PPA providing the latest stable release:
 
 ::
@@ -26,11 +26,11 @@ version by using the PPA providing the latest stable release:
 Creating your first container
 -----------------------------
 
-In order to create a container, you have to give it a name (with the -n 
-parameter) and a template (with the -t parameter). If this is the first time 
-you use a template, it may take a few minutes to download system files and set 
-them all up, but as these will all be cached, any container based off the same 
-template will be created almost instantly.
+In order to create a container, you have to give it a name (with the -n
+parameter) and a template (with the -t parameter). If this is the first
+time you use a template, it may take a few minutes to download system
+files and set them all up, but as these will all be cached, any container
+based off the same template will be created almost instantly.
 
 ::
     sudo lxc-create -t ubuntu -n mycontainer
@@ -56,9 +56,9 @@ Creating a container for different architectures
 
 **Other architectures:**
 
-While LXC is not a virtualization technology, it is possible to combine it 
-with qemu's user space CPU emulation to create containers for architectures 
-different than your own.
+While LXC is not a virtualization technology, it is possible to combine it
+with qemu's user space CPU emulation to create containers for
+architectures different than your own.
 
 First you'll have to install the qemu-user-static package:
 
@@ -78,5 +78,5 @@ Possible architectures are:
 - arm64 (64bit ARM)
 - powerpc (TODO confirm this)
 
-Since the CPU will be emulated by qemu, don't expect performances even close to
-the real hardware. 
+Since the CPU will be emulated by qemu, don't expect performances even
+close to the real hardware.
