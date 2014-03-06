@@ -25,7 +25,7 @@ to have admin rights with the newly created user.
 
 ::
     adduser <username> --shell /usr/bin/zsh
-    usermod -G sudo <username>
+    usermod -a -G sudo <username>
 
 You can now terminate your root SSH session and log back in as this user.
 
