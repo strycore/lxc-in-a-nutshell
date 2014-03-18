@@ -62,7 +62,6 @@ Configure the nat table:
     # Allow routing from eth0 (the interface connected to the internet)
     -A POSTROUTING -o eth0 -j MASQUERADE
 
-
     # Forward SSH connections to your containers.
     -A PREROUTING -i eth0 -p tcp --dport 22101 -j DNAT --to-destination 10.0.3.101:22
     -A PREROUTING -i eth0 -p tcp --dport 22102 -j DNAT --to-destination 10.0.3.102:22
