@@ -5,8 +5,8 @@ LXC Web Panel
 Install it with:
 
 ::
-    wget http://lxc-webpanel.github.io/tools/install.sh -O - | bash    
-    
+    wget http://lxc-webpanel.github.io/tools/install.sh -O - | bash
+
 What this script does:
     - Downloads LWP and installs it in /srv/lwp/
     - Installs a service to automatically start LWP at boot time.
@@ -20,7 +20,8 @@ Update:
 
 Setting up nginx as a reverse proxy with custom subdomain and HTTPS
 
-SSL certificate creation is explained in the "Setting up HTTP servers" chapter.
+SSL certificate creation is explained in the "Setting up HTTP servers"
+chapter.
 
 ::
     upstream lxc {
