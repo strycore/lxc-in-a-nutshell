@@ -1,15 +1,16 @@
+************
 Introduction
-============
+************
 
 
 Before you start
-----------------
+================
 
  - Ubuntu Server
  - New (and stock) kernel
 
 Installing LXC
---------------
+==============
 
 ::
     sudo apt-get install lxc
@@ -24,7 +25,7 @@ version by using the PPA providing the latest stable release:
     sudo apt-get install lxc
 
 Creating your first container
------------------------------
+=============================
 
 In order to create a container, you have to give it a name (with the -n
 parameter) and a template (with the -t parameter). If this is the first
@@ -47,14 +48,39 @@ Login in container
 
 
 
-Creating a container for different architectures
-------------------------------------------------
+Creating alternative containers
+===============================
 
-**i386 containers on 64bit hosts:**
+LXC is not a virtualization system but it is not limited to a single Linux
+distribution or architecture. You have a wide arrary of choices when
+creating your containers.
+
+Installing a different version of your host
+-------------------------------------------
+
+This will probably be the most useful feature when creating containers
+that differ from your host. While many Linux distributions share a lot in
+common at any given time, there will be big differences between the same
+distrbitions taken at two different points in time. Some software may not
+be updated with the latest technology and may require you to run previous
+version of your OS, or, on the contrary, you may want to try a bleeding
+edge technology on an OS that is still in beta.
+
+To create a container with a different version of Ubuntu, run::
+
+    sudo lxc-create -n mycontainer -t ubuntu -- -r precise
+
+This command will create a container with Ubuntu 12.04 LTS (codenamed
+Precise Pangolin). As you can see, the -r parameter is specific to the
+Ubuntu template, hence it is given after the -- part.
+
+i386 containers on 64bit hosts
+------------------------------
 
 
 
-**Other architectures:**
+Other architectures
+-------------------
 
 While LXC is not a virtualization technology, it is possible to combine it
 with qemu's user space CPU emulation to create containers for
