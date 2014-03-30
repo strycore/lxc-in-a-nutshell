@@ -1,9 +1,10 @@
+*********************
 Network configuration
-=====================
+*********************
 
 
 Setting the IP address
-----------------------
+======================
 
 You can set the IP adress from you host by editing the configuration file for
 your container:
@@ -16,7 +17,7 @@ your container:
 
 
 Firewall setup
---------------
+==============
 
 With iptables
 
@@ -100,7 +101,7 @@ enable UFW forwarding:
 
 
 Setting up a DNS server
------------------------
+=======================
 
 Make sure you have bind9 installed on your host machine and that you have
 the vanilla config from the Ubuntu packages. Some server providers (like
@@ -149,7 +150,7 @@ to the outside world. You can block incoming request with your firewall.
 
 
 SSH
----
+===
 
 For your deployment purposes and other tasks, you will probably need
 direct access to your lxc containers via ssh. You can achieve this by
@@ -191,3 +192,18 @@ From now on you can log in you container with:
 ::
 
     ssh mycontainer.domain
+
+
+Mosh
+====
+
+SSH is a fine tool for accessing your servers, it's installed everywhere,
+it's secure and has become the standard on Unix servers. Unfortunately,
+SSH is unfit for a mobile usage. Changing you IP, waking up from suspend,
+or losing your Wifi signal for too long will likely kill your SSH session
+and you'll have to reconnect to your server. Now enter the world of Mosh.
+Mosh stands for Mobile Shell and does not suffer from these issues, it's
+the perfect tool for staying connected to your server while travelling on
+a train for example.
+
+TODO: install mosh
