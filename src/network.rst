@@ -206,4 +206,16 @@ Mosh stands for Mobile Shell and does not suffer from these issues, it's
 the perfect tool for staying connected to your server while travelling on
 a train for example.
 
-TODO: install mosh
+A recent version of Mosh (1.2.4 at the time of this writing) is provided
+in Ubuntu.
+
+::
+    sudo apt-get install mosh
+
+You will have to install mosh on both your servers and your clients in
+order to make a connection.
+
+Once mosh is installed on both, you can connect the same way you would
+using SSH::
+
+    mosh domain.com
