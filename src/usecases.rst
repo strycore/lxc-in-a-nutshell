@@ -133,5 +133,17 @@ Luckyly, since we're using LXC, it's trivial to create a container using a
 previous version of Ubuntu. For Airtime, we will create a container with
 Ubuntu 12.04 LTS::
 
-    sudo lxc-create -n airtime -t ubuntu -v FIXME
+    sudo lxc-create -n airtime -t ubuntu -- -r precise
+
+Once the container is created, you can go on and install Airtime. Th
+website provides a Debian / Ubuntu package which will setup everything
+nicely for you::
+
+    sudo apt-get install wget
+    wget http://apt.sourcefabric.org/misc/airtime-easy-setup.deb
+    sudo apt-get -f install
+    sudo apt-get update
+    sudo apt-get install airtime
+
+
 
