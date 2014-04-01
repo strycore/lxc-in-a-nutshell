@@ -219,3 +219,19 @@ Once mosh is installed on both, you can connect the same way you would
 using SSH::
 
     mosh domain.com
+
+Mosh connections are kept alive as long as both the client and the server
+are running. If you close a client then the following message will appear
+on your server when you reconnect::
+
+    Mosh: You have a detached Mosh session on this server (mosh [32015]).
+
+While this vocabulary sounds similar to what you can read with screen or
+tmux, you can't reconnect to this detached session for security reasons.If
+you want to keep sessions at all times, you can combine mosh with tmux for
+best results.
+
+When you get a detached session on your host, you can get rid of it by
+killing the pid indicated by the warning message::
+
+    sudo kill 32015
