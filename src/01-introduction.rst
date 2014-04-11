@@ -55,6 +55,24 @@ LXC is not a virtualization system but it is not limited to a single Linux
 distribution or architecture. You have a wide arrary of choices when
 creating your containers.
 
+Installing a different distributions
+------------------------------------
+
+LXC provides a whole set of Linux distributions ready to install with
+numerous template scripts. All major distributions (Ubuntu, Fedora, 
+Debian, Gentoo, Archlinux, Opensuse) are included and even
+some lesser known ones such as Plamo, Altlinux or Alpine.
+
+Choosing one of those templates is a mandatory step in the creation of a
+template, given by the `-t` argument of the `lxc-create` command.
+
+Most templates provide their own set of options, to use them write them
+following two dashes `--` after passing all necessary arguments to
+`lxc-create`. For example, let's create a debian container running the
+unstable branch::
+
+    sudo lxc-create -t debian -n mycontainer -- -r sid
+
 Installing a different version of your host
 -------------------------------------------
 
