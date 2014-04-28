@@ -64,6 +64,7 @@ Use case: Managing your backups
 ===============================
 
 * Sparkleshare
+* Seafile http://seafile.com/en/home/
 * RSync
 * OwnCloud
 * cryptfs
