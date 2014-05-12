@@ -48,7 +48,6 @@ chapter.
         index      index.html;
 
         location / {
-            proxy_pass http://lxc;
             proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
             proxy_redirect off;
             proxy_buffering off;
@@ -56,6 +55,10 @@ chapter.
             proxy_set_header        X-Real-IP        $remote_addr;
             proxy_set_header        X-Forwarded-For  $proxy_add_x_forwarded_for;
             proxy_redirect http:// https://;
+            if (!-f $request_filename) {
+                proxy_pass http://lxc;
+                break;
+            }
         }
     }
 
