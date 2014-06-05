@@ -59,7 +59,7 @@ Installing a different distributions
 ------------------------------------
 
 LXC provides a whole set of Linux distributions ready to install with
-numerous template scripts. All major distributions (Ubuntu, Fedora, 
+numerous template scripts. All major distributions (Ubuntu, Fedora,
 Debian, Gentoo, Archlinux, Opensuse) are included and even
 some lesser known ones such as Plamo, Altlinux or Alpine.
 
@@ -124,3 +124,14 @@ Possible architectures are:
 
 Since the CPU will be emulated by qemu, don't expect performances even
 close to the real hardware.
+
+Unprivileged containers
+-----------------------
+
+Be careful we you mount your unprivileged containers!
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You may want to symlink or mount --bind your ~/.local/share/lxc on
+another drive with more space. If you do so, make sure that the
+destination drive is mounted without the `nosuid` flag otherwise you
+won't be able to get root access in your container.
