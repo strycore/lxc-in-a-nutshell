@@ -1,27 +1,26 @@
 The host machine
 ================
 
-Setting up LXC containers will require you to have a dedicated server to run
-your containers on. While this book targets Ubuntu Server 14.04 as the host
-system, any Linux distribution with a modern kernel should be able to host your
-containers.
+Setting up LXC containers will require you to have a dedicated server to
+run your containers on. While this book targets Ubuntu Server 14.04 as the
+host system, any Linux distribution with a modern kernel should be able to
+host your containers.
 
 Basic setup
 -----------
 
-In these steps, we'll review the basic setup for your host server. This is not
-related to LXC in any way but these are common steps usually taken after the OS
-has finished installing.
+In these steps, we'll review the basic setup for your host server. This is
+not related to LXC in any way but these are common steps usually taken
+after the OS has finished installing.
 
-First you'll probably need a few packages, install whatever tools you need to
-feel at home. For example:
+First you'll probably need a few packages, install whatever tools you need
+to feel at home. For example::
 
-::
     apt-get install git curl vim-nox zsh
 
-Then create a user, since your provider probably gave you root access and we
-don't want to directly log in as root. Add this user to the sudo group in order
-to have admin rights with the newly created user.
+Then create a user, since your provider probably gave you root access and
+we don't want to directly log in as root. Add this user to the sudo group
+in order to have admin rights with the newly created user.
 
 ::
     adduser <username> --shell /usr/bin/zsh
@@ -152,3 +151,10 @@ HTTP Server
 Your host machine can act as a HTTP proxy for your containers. While any
 HTTP should get the job done, we'll be using nginx which is a good
 candidate for this task.
+
+If you have any SSL certificates on your domains, you'll have to set them
+on your host.
+
+::
+    # TODO Does it change anything if the container serves HTTPS instead
+    # of HTTPS?
