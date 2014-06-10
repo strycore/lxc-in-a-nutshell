@@ -153,8 +153,77 @@ HTTP should get the job done, we'll be using nginx which is a good
 candidate for this task.
 
 If you have any SSL certificates on your domains, you'll have to set them
-on your host.
+on your host. See the paragraph below on how to setup a SSL certificate
+for one of your domains.
+
+SSL Certificates
+----------------
+
+Regarding SSL certificates, you have two options available. You either
+generate a self-signed certificate or you get a certificate from a
+trusted authority, which you usually pay for. While self-signed
+certificates are ok for websites that you use privately such as your
+Redmine or Jenkins instance, it's better to get a verified certificate
+for your domains accessible to the public.
+There are a lot of offers available in the world of SSL certificates
+ranging from very affordable (like Gandi) to ridiculously expensive
+(Verisign/Symantec).
+
+For basic needs (securing a single domain), you should find offers below
+$30 per year. If you are paying more, you are probably getting ripped off
+by some unscrupulous authority.
+
+Also note that certificates for a star domain (\*.example.com) are way
+more expensive than certificates for a single domain (which usually
+includes the www. subdomain as well). You might want to take this into
+account when building your website if you're not willing to spend a
+fortune on certificates and avoid creating subdomains such as
+api.mydomain.com or admin.mydomain.com.
+
+It should also be noted that you have two free options to have a
+Certificate delivered by an authority. The first one is StartSSL, which
+will give you 1 year valid certificates for free.
+The other one is CACert, which is a community-driven Certificate
+Authority. While CACert certificates are free, their authority is not
+recognised by default by all major web browser, which offer little
+advantage over a self-signed certificate. It is therefore recommended not
+to use CACert for public-facing websites (unless you want your visitors
+to get a big fat nasty warning when they visit your website).
+
+Once you've decided which solution is better for you website, let's get on
+with setting this thing up. Whether you have chosen to create a
+self-signed certificate or to get one from an authority, the process
+always starts by creating a Certificate Signing Request (CSR) and a key::
+
+    openssl req -nodes -newkey rsa:2048 -keyout myserver.key -out myserver.csr
+
+You will be asked a bunch of questions about you and your website, this
+information will be attached to your certificates so your visitors will
+be able to verify your identity. 
 
 ::
-    # TODO Does it change anything if the container serves HTTPS instead
-    # of HTTPS?
+    Generating a 2048 bit RSA private key
+    .....+++
+    ........+++
+    unable to write 'random state'
+    writing new private key to 'myserver.key'
+    -----
+    You are about to be asked to enter information that will be incorporated
+    into your certificate request.
+    What you are about to enter is what is called a Distinguished Name or a DN.
+    There are quite a few fields but you can leave some blank
+    For some fields there will be a default value,
+    If you enter '.', the field will be left blank.
+    -----
+    Country Name (2 letter code) [AU]:US
+    State or Province Name (full name) [Some-State]:California 
+    Locality Name (eg, city) []:Los Angeles
+    Organization Name (eg, company) [Internet Widgits Pty Ltd]:My company
+    Organizational Unit Name (eg, section) []:
+    Common Name (e.g. server FQDN or YOUR name) []:myserver.com
+    Email Address []:me@myserver.com
+
+    Please enter the following 'extra' attributes
+    to be sent with your certificate request
+    A challenge password []:
+    An optional company name []:My company
