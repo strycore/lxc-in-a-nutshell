@@ -1,5 +1,6 @@
+****************
 The host machine
-================
+****************
 
 Setting up LXC containers will require you to have a dedicated server to
 run your containers on. While this book targets Ubuntu Server 14.04 as the
@@ -7,7 +8,7 @@ host system, any Linux distribution with a modern kernel should be able to
 host your containers.
 
 Basic setup
------------
+===========
 
 In these steps, we'll review the basic setup for your host server. This is
 not related to LXC in any way but these are common steps usually taken
@@ -95,7 +96,7 @@ and install missing language packs:
     sudo apt-get install language-pack-fr
 
 CGroups
--------
+=======
 
 Your kernel should have cgroup support enabled for LXC to work properly.
 This should already be the case if you are running a stock Ubuntu kernel
@@ -146,7 +147,7 @@ to the following:
     systemd on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,name=systemd)
 
 HTTP Server
------------
+===========
 
 Your host machine can act as a HTTP proxy for your containers. While any
 HTTP should get the job done, we'll be using nginx which is a good
@@ -157,7 +158,7 @@ on your host. See the paragraph below on how to setup a SSL certificate
 for one of your domains.
 
 SSL Certificates
-----------------
+================
 
 Regarding SSL certificates, you have two options available. You either
 generate a self-signed certificate or you get a certificate from a
@@ -190,6 +191,9 @@ advantage over a self-signed certificate. It is therefore recommended not
 to use CACert for public-facing websites (unless you want your visitors
 to get a big fat nasty warning when they visit your website).
 
+Creating the Certificate Signing Request
+----------------------------------------
+
 Once you've decided which solution is better for you website, let's get on
 with setting this thing up. Whether you have chosen to create a
 self-signed certificate or to get one from an authority, the process
@@ -199,7 +203,7 @@ always starts by creating a Certificate Signing Request (CSR) and a key::
 
 You will be asked a bunch of questions about you and your website, this
 information will be attached to your certificates so your visitors will
-be able to verify your identity. 
+be able to verify your identity.
 
 ::
     Generating a 2048 bit RSA private key
@@ -216,7 +220,7 @@ be able to verify your identity.
     If you enter '.', the field will be left blank.
     -----
     Country Name (2 letter code) [AU]:US
-    State or Province Name (full name) [Some-State]:California 
+    State or Province Name (full name) [Some-State]:California
     Locality Name (eg, city) []:Los Angeles
     Organization Name (eg, company) [Internet Widgits Pty Ltd]:My company
     Organizational Unit Name (eg, section) []:
@@ -227,3 +231,33 @@ be able to verify your identity.
     to be sent with your certificate request
     A challenge password []:
     An optional company name []:My company
+
+
+Setting up a secure site in nginx
+---------------------------------
+
+Gather your certificate files someplace safe on your server, I like to
+keep mine in /etc/ssl/sites/. You should at least have a .crt and a .key
+file and also maybe a .pem file (If your Certificate Authority gave you
+an intermediate certificate).
+
+Once you got your certificate ready, open the nginx config file
+corresponding to your domain name and make sure you have the following::
+
+    listen x.x.x.x 443 ssl;
+
+Replace the dummy IP address x.x.x.x with your public facing IP, then add
+the following lines in the same server section::
+
+    ssl_certificate /etc/ssl/sites/myserver.crt;
+    ssl_certificate_key /etc/ssl/sites/myserver.key;
+
+In the event where your authority has issued an intermediate certificate
+(usually as a .pem file), you can use it by appending it to your main
+certificate::
+
+    cat myserver_intermediate.pem >> myserver.crt
+
+When everything is correctly setup, you can restart nginx::
+
+    servcice nginx restart
