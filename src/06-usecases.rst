@@ -119,7 +119,7 @@ bind-address directive::
 
 Restart your MySQL server and your server will be visible to other
 containers::
-    nc -vz mysql 3306                                                                           ⏎
+    nc -vz mysql 3306
     Connection to mysql 3306 port [tcp/mysql] succeeded!
 Now that your server is reachable, you must now authorize your users to
 connect and use their databases. Connect to your mysql server command
