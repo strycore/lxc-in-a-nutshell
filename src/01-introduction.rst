@@ -95,6 +95,8 @@ Ubuntu template, hence it is given after the -- part.
 i386 containers on 64bit hosts
 ------------------------------
 
+::
+    sudo lxc-create -n mycontainer -t ubuntu -- --arch i386
 
 
 Other architectures
