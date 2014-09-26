@@ -59,7 +59,7 @@ The `root` directive is very important to set to a valid value. It should
 point to a valid directory containing your website files.
 
 `index` point to the file used when a request is made on the base url.
-Here, a request to `http://example.com` would serve the 
+Here, a request to `http://example.com` would serve the
 `/srv/mywebsite/index.html` file.
 
 `server_name` usually contains your domain names or aliases (the domain
@@ -67,14 +67,14 @@ with a www. prefix or other subdomains).
 
 Next comes another block which specifies the configuration used for a
 particular URL prefix. Having a single `location` block for `/` tells
-nginx to use this for any URL on the website. You could have more 
+nginx to use this for any URL on the website. You could have more
 `location` block, pointing to prefixes such as `/blog` or `/wiki` and
 providing a totally different configuration.
 
 Our `location` block contains a single directive which will translate
 URLs requested to a file on the server. If one makes a request to
 `http://example.com/mypage` then nginx will try to serve (in that order)
-the files /srv/mywebsite/mypage.html, /srv/mywebsite/mypage and 
+the files /srv/mywebsite/mypage.html, /srv/mywebsite/mypage and
 /srv/mywebsite/mypage/index.html. If none of these files exist on the
 server then nginx will return a 404 error.
 
@@ -160,7 +160,18 @@ Setting up nginx on the host
 Use case: email server with Mailpile
 ====================================
 
-* postfix
+Setting up postfix
+------------------
+
+Creating additional users
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You may want to create users that have no shell access to the machine and
+just be able to send and receive email. You can still use unix accounts
+but you'll want to set their shell to `nologin`::
+     useradd --create-home -s /usr/sbin/nologin emailuser
+     passwd emailuser
+
 * dovecot
 * mailpile
 
@@ -182,7 +193,7 @@ Use case: znc IRC bouncer
 Installing znc::
 
     sudo apt-get update
-    sudo apt-get install wget build-essential libssl-dev libperl-dev 
+    sudo apt-get install wget build-essential libssl-dev libperl-dev
     # For Python support
     sudo apt-get install pkg-config python3-dev
     wget http://znc.in/releases/znc-1.4.tar.gz
