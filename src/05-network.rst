@@ -6,8 +6,8 @@ Network configuration
 Setting the IP address
 ======================
 
-You can set the IP adress from you host by editing the configuration file for
-your container:
+You can set the IP adress from you host by editing the configuration file
+for your container:
 
 ::
 
@@ -21,12 +21,12 @@ Firewall setup
 
 With iptables
 
-Iptables is the default application provided on Linux systems to control the
-firewall features provided by the kernel.
+Iptables is the default application provided on Linux systems to control
+the firewall features provided by the kernel.
 
 You can keep your iptables rules in a file where each command will be run
-sequentially. Keep in mind that the order of these commands matter and a bad
-sequence could possibly lock yourself out of your own server.
+sequentially. Keep in mind that the order of these commands matter and a
+bad sequence could possibly lock yourself out of your own server.
 
 Configure the filter table:
 
@@ -82,6 +82,8 @@ service is binding them with your network interface in the
         # Your network interface config here
         pre-up iptables-restore < /etc/iptables.up.rules
 
+You can also reload your firewall after you have modified them::
+    sudo iptables-restore < /etc/iptables.up.rules
 
 With UFW
 
