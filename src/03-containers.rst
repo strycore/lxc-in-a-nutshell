@@ -1,6 +1,25 @@
 *********************
-Setting containers up
+Setting up containers
 *********************
+
+Container caveats
+=================
+
+Running Fedora, CentOS containers
+---------------------------------
+
+Distributions like Fedora, CentOS, Red Hat or Oracle don't run AppArmor
+which is likely to cause some issues when starting a container on host
+that do use it.
+
+Before starting such system check your container config for the lines::
+
+    # When using LXC with apparmor, uncomment the next line to run unconfined:
+    lxc.aa_profile = unconfined
+
+Uncomment the line if needed, then start you container. This behavior
+should become the default in future versions of LXC.
+
 
 Automating updates
 ==================
