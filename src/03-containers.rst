@@ -5,8 +5,8 @@ Setting up containers
 Container caveats
 =================
 
-Running Fedora, CentOS containers
----------------------------------
+Running Fedora, CentOS or other non AppArmor containers
+-------------------------------------------------------
 
 Distributions like Fedora, CentOS, Red Hat or Oracle don't run AppArmor
 which is likely to cause some issues when starting a container on host
