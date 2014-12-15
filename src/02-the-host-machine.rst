@@ -63,8 +63,8 @@ If you encounter error messages such as:
     perl: warning: Falling back to the standard locale ("C").
     locale: Cannot set LC_ALL to default locale: No such file or directory
 
-Check your locale settings in /etc/environment and /etc/default/locale, update
-the LANG setting if needed then update your locales:
+Check your locale settings in /etc/environment and /etc/default/locale,
+update the LANG setting if needed then update your locales:
 
 ::
     sudo locale-gen en_US en_US.UTF-8
@@ -94,6 +94,38 @@ and install missing language packs:
 
 ::
     sudo apt-get install language-pack-fr
+
+Dotfiles
+========
+
+What dotfiles refer to are a bunch of files, starting with a dot (making
+them hidden by default on Unix systems), used to configure various
+programs. Here are some examples of common dotfiles with their usage:
+
+- .zshrc: Settings for the zsh shell, includes environment variables,
+  aliases, prompt customisation, functions and other useful setups.
+- .bashrc: Same as .zshrc but for the bash shell
+- .gitconfig: Global configuration for git that will be used on all of
+  your projects. It usually contains your name and email along with some
+  handy aliases.
+- .tmux.conf: Configuration file for the tmux screen multiplexer
+- .vimrc: Configuration file for the vim editor
+
+It is highly encouraged that you keep your dotfiles under version
+control. That way you can very quickly deploy a working environment you
+are confortable with in a matter of minutes and you will have the same
+environment across all your machines. You can keep your dotfiles in a
+public git repository such as GitHub or keep them in your own private
+git repo (we will explain how to setup a private git repository later on
+in this book). Once you have your dotfiles versionned in a single folder,
+you can create symbolic links to their real emplacement. Let's stay you
+have stored your dotfiles in ~/.dotfiles/, you can use your versionned
+.zshrc by linking it::
+
+    ln -s ~/.dotfiles/zshrc ~/.zshrc
+
+You can even make the link creation process into a small shell script to
+automate this tedious task.
 
 CGroups
 =======
