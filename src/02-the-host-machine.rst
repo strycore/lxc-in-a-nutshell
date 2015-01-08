@@ -189,6 +189,75 @@ If you have any SSL certificates on your domains, you'll have to set them
 on your host. See the paragraph below on how to setup a SSL certificate
 for one of your domains.
 
+The front facing nginx will dispatch HTTP request to whatever HTTP server
+your containers have (nginx, apache, nodejs, gunicorn, …). This
+dispatching is done by setting several virtual hosts which will redirect
+given domain names to their matching container.
+
+You'll want to keep a catch-all virtual host for the domains and
+subdomains that are not configured (or when your server is acceced by
+its IP address). The default virtual host shipped with nginx is an
+excellent candidate for this purpose but any other one will do. The
+important aspect of the fallback virtual host is that the `listen`
+directive must contain the `default_server` argument such as::
+
+    listen 10.10.10.10:80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+Note that the default nginx configuration in Ubuntu does not provide a
+default domain for https connections, so you'll have to configure it
+manually.
+
+Configuring virtual hosts
+-------------------------
+
+Nginx virtual hosts are simple text files stored in
+/etc/nginx/sites-available  Here is a minimal configuration that can be
+used as a reverse proxy to one of your containers::
+
+    upstream mydomain {
+        # Configure the IP and port to point at the HTTP server in your
+        # container
+        server 10.0.3.1:80;
+    }
+
+    server {
+        # This is your public IP address
+        listen 10.10.10.10:80;
+        # List here all the domains and subdomains that will point to
+        # your container.
+        server_name mydomain.com www.mydomain.com othersubdomain.mydomain.com;
+
+        client_max_body_size 8G;
+        access_log /var/log/nginx/mydomain.access.log;
+        error_log /var/log/nginx/mydomain.error.log;
+
+        location / {
+            # The mydomain part refers to the name of the virtual host on
+            # the first line of this config file.
+            proxy_pass  http://mydomain;
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+            proxy_redirect off;
+            proxy_buffering off;
+            proxy_set_header        Host            $host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+
+Once you have added one or several virtual hosts, you have to enable
+them first by creating a symlink in /etc/nginx/sites-enabled::
+
+    cd /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/mydomain.conf .
+
+Every time you add or remove virtual hosts or change you nginx config,
+don't forget to reload the service (reloading the service should be enough
+for most cases and it doesn't shut down the service like a restart does.)
+
+::
+    sudo service nginx reload
+
 SSL Certificates
 ================
 
