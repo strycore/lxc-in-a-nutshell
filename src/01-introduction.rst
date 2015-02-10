@@ -13,6 +13,7 @@ Installing LXC
 ==============
 
 ::
+
     sudo apt-get install lxc
 
 If you're on an older version of Ubuntu than 14.04, you can get the latest
@@ -34,18 +35,16 @@ files and set them all up, but as these will all be cached, any container
 based off the same template will be created almost instantly.
 
 ::
+
     sudo lxc-create -t ubuntu -n mycontainer
 
-Start the container
+Start the container::
 
-::
     sudo lxc-start -n ubuntu -d
 
-Login in container
+Login in container::
 
-::
     sudo lxc-console -n ubuntu
-
 
 
 Creating alternative containers
@@ -73,6 +72,11 @@ unstable branch::
 
     sudo lxc-create -t debian -n mycontainer -- -r sid
 
+.. note:: The example above creates a Debian container using the sid
+    release. Other valid names for Debian are `squeeze`, `wheezy`
+    or `jessie`. You can pass the same parameter for Ubuntu containers,
+    giving a release codename to install (`precise`, `trusty`, etc)
+
 Installing a different version of your host
 -------------------------------------------
 
@@ -96,6 +100,7 @@ i386 containers on 64bit hosts
 ------------------------------
 
 ::
+
     sudo lxc-create -n mycontainer -t ubuntu -- --arch i386
 
 
@@ -106,15 +111,13 @@ While LXC is not a virtualization technology, it is possible to combine it
 with qemu's user space CPU emulation to create containers for
 architectures different than your own.
 
-First you'll have to install the qemu-user-static package:
+First you'll have to install the qemu-user-static package::
 
-::
     sudo apt-get install qemu-user-static
 
 Then passing the right arguments to lxc-create will build an ARM container.
-The following command will create an armfs container with Ubuntu 12.04:
+The following command will create an armfs container with Ubuntu 12.04::
 
-::
     sudo lxc-create -n myarmcontainer -t ubuntu -- -a armhf -r precise
 
 Possible architectures are:
