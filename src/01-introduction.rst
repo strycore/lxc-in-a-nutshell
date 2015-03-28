@@ -133,8 +133,8 @@ close to the real hardware.
 Unprivileged containers
 -----------------------
 
-Be careful we you mount your unprivileged containers!
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Be careful where you mount your unprivileged containers!
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may want to symlink or mount --bind your ~/.local/share/lxc on
 another drive with more space. If you do so, make sure that the

@@ -186,8 +186,14 @@ HTTP should get the job done, we'll be using nginx which is a good
 candidate for this task.
 
 If you have any SSL certificates on your domains, you'll have to set them
-on your host. See the paragraph below on how to setup a SSL certificate
-for one of your domains.
+on your host. See the next paragraph to setup SSL certificates for your
+domains.
+
+Installing nginx
+----------------
+
+Setting up nginx nginx only requires the instalation of its package::
+    sudo apt-get install nginx
 
 The front facing nginx will dispatch HTTP request to whatever HTTP server
 your containers have (nginx, apache, nodejs, gunicorn, …). This
