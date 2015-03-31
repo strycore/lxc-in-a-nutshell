@@ -103,6 +103,15 @@ i386 containers on 64bit hosts
 
     sudo lxc-create -n mycontainer -t ubuntu -- --arch i386
 
+On Debian based systems with old versions of dpkg, you may receive an
+error when running apt-get commands on a 32bit container::
+
+    dpkg: error: configuration error: /etc/dpkg/dpkg.cfg.d/lxc-multiarch:1: unknown option 'foreign-architecture'
+    E: Sub-process /usr/bin/dpkg returned an error code (2)
+
+To solve this issue, delete the incriminated file::
+
+    rm /etc/dpkg/dpkg.cfg.d/lxc-multiarch
 
 Other architectures
 -------------------
